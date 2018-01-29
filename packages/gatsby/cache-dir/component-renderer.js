@@ -16,8 +16,13 @@ class ComponentRenderer extends React.Component {
 
     // Set the pathname for 404 pages.
     if (!loader.getPage(location.pathname)) {
+      const match = location.pathname.match(/\/(\w*)(\/.*)?/);
+      const notFoundPathname = match && match[1] ?
+        `/${match[1]}/404.html` : `404.html`;
+      console.log(1, location.pathname, notFoundPathname);
+      debugger;
       location = Object.assign({}, location, {
-        pathname: `/404.html`,
+        pathname: notFoundPathname,
       })
     }
 
@@ -48,8 +53,13 @@ class ComponentRenderer extends React.Component {
 
         // Set the pathname for 404 pages.
         if (!loader.getPage(location.pathname)) {
+          const match = location.pathname.match(/\/(\w*)(\/.*)?/);
+          const notFoundPathname = match && match[1] ?
+            `/${match[1]}/404.html` : `404.html`;
+          console.log(2, location.pathname, notFoundPathname);
+          debugger;
           location = Object.assign({}, location, {
-            pathname: `/404.html`,
+            pathname: notFoundPathname,
           })
         }
 

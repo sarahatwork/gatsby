@@ -156,16 +156,21 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 render: routeProps => {
                   attachToHistory(routeProps.history)
                   const props = layoutProps ? layoutProps : routeProps
+                  const { location: { pathname } } = props;
 
-                  if (loader.getPage(props.location.pathname)) {
+                  if (loader.getPage(pathname)) {
                     return createElement(ComponentRenderer, {
                       page: true,
                       ...props,
                     })
                   } else {
+                    const match = pathname.match(/\/(\w*)(\/.*)?/);
+                    const notFoundPathname = match && match[1] ?
+                      `/${match[1]}/404.html` : `404.html`;
+                    console.log(3, pathname, notFoundPathname);
                     return createElement(ComponentRenderer, {
                       page: true,
-                      location: { pathname: `/404.html` },
+                      location: { pathname: notFoundPathname },
                     })
                   }
                 },
